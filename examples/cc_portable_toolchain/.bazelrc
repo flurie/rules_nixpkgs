@@ -1,0 +1,2 @@
+# Use the portable C++ toolchain
+build --crosstool_top=@local_config_cc_portable//:toolchain 

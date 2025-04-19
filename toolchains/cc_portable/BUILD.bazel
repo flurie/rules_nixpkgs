@@ -1,0 +1,11 @@
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "cc_portable.bzl",
+    "cc_portable.nix",
+])
+
+filegroup(
+    name = "all",
+    srcs = glob(["**"]),
+) 

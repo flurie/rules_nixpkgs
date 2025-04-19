@@ -1,0 +1,35 @@
+workspace(name = "cc_portable_example")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Load rules_nixpkgs
+http_archive(
+    name = "io_tweag_rules_nixpkgs",
+    strip_prefix = "rules_nixpkgs-0.11.0",
+    urls = ["https://github.com/tweag/rules_nixpkgs/archive/refs/tags/v0.11.0.tar.gz"],
+)
+
+load("@io_tweag_rules_nixpkgs//nixpkgs:repositories.bzl", "rules_nixpkgs_dependencies")
+
+rules_nixpkgs_dependencies()
+
+load("@io_tweag_rules_nixpkgs//nixpkgs:nixpkgs.bzl", "nixpkgs_git_repository", "nixpkgs_local_repository")
+
+# Use nixpkgs from a local checkout
+nixpkgs_local_repository(
+    name = "nixpkgs",
+    nix_file = "//:nixpkgs.nix",
+)
+
+local_repository(
+    name = "rules_nixpkgs_cc_portable",
+    path = "../../toolchains/cc_portable",
+)
+
+# Load the portable C++ toolchain
+load("@rules_nixpkgs_cc_portable//:cc_portable.bzl", "nixpkgs_cc_portable_configure")
+
+nixpkgs_cc_portable_configure(
+    name = "local_config_cc_portable",
+    repository = "@nixpkgs",
+)

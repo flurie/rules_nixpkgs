@@ -1,0 +1,11 @@
+"""
+Portable C++ toolchain for Bazel with Nixpkgs that doesn't rely on Nix store paths.
+"""
+
+module(
+    name = "rules_nixpkgs_cc_portable",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "rules_nixpkgs_core", version = "0.11.0")
+bazel_dep(name = "rules_nixpkgs_cc", version = "0.11.0")
